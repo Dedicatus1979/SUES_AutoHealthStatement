@@ -28,7 +28,7 @@ P.S.话说我现在搞这个是不是有点属于是四九年入国军啊，感�
 对，[我](https://github.com/Dedicatu1979)不会，其实我是为了搞这个程序当场现学的playwright，很多操作都不会，所以你们看源代码时就会发现个很奇怪的东西，那就是我都用playwright了，可我在里面还是用了bs4，因为我不知道该怎么用playwright保存元素...
 
 ## 使用方法说明
-把[源代码](.\SUES_AutoHealthStatement.py)下载下来后放到python3.7及以上的版本的解释器中运行本程序（懒得打包成exe了，其实这整个程序都可以说是赶工出来的，懒得改了）.P.S.：请确保您的解释器有[requirements.txt](./requirements.txt)内的第三方模块（你直接```pip install -r requirements.txt```也行）
+把[源代码](./SUES_AutoHealthStatement.py)下载下来后放到python3.7及以上的版本的解释器中运行本程序（懒得打包成exe了，其实这整个程序都可以说是赶工出来的，懒得改了）.P.S.：请确保您的解释器有[requirements.txt](./requirements.txt)内的第三方模块（你直接```pip install -r requirements.txt```也行）
 
 运行的话，就把它扔到服务器中，或者一台24小时工作的电脑里就行了，它会每天自动打卡，就这样，很简单...但是需要写些设置.
 
