@@ -15,7 +15,7 @@ a simple program for auto upload health statement for Shanghai University Of Eng
 P.S.话说我现在搞这个是不是有点属于是四九年入国军啊，感觉马上就不再需要健康填报了.
 
 ## 实现原理
-主要原理是用[playwright](github.com/microsoft/playwright)模拟浏览器进行登录与填报操作.
+主要原理是用[playwright](https://github.com/microsoft/playwright)模拟浏览器进行登录与填报操作.
 
 （为什么不用requests或xhttp来纯后台实现呢，其实主要原因是我不会，还有个原因是前人留下来的登录程序好像不能用了，但我们又搞不出新的登录程序，所以干脆一气之下改模拟浏览器了，要是以后还需要健康填报的话，我可能会再研究研究怎么纯后台实现吧..）
 
@@ -23,9 +23,9 @@ P.S.话说我现在搞这个是不是有点属于是四九年入国军啊，感�
 
 滑动验证码就比较麻烦了，最开始是我用pillow加nummpy自己手写了个识别程序，但那个识别程序的成功率有点低，可能才只有90%多. 所以我直接上opencv了. 但说实话，opencv的识别率也不是百分百，大概98%以上？
 
-其他的应该都很简单了吧，毕竟我都直接模拟浏览器了，点个鼠标[谁](github.com/Dedicatu1979)不会啊.
+其他的应该都很简单了吧，毕竟我都直接模拟浏览器了，点个鼠标[谁](https://github.com/Dedicatu1979)不会啊.
 
-对，[我](github.com/Dedicatu1979)不会，其实我是为了搞这个程序当场现学的playwright，很多操作都不会，所以你们看源代码时就会发现个很奇怪的东西，那就是我都用playwright了，可我在里面还是用了bs4，因为我不知道该怎么用playwright保存元素...
+对，[我](https://github.com/Dedicatu1979)不会，其实我是为了搞这个程序当场现学的playwright，很多操作都不会，所以你们看源代码时就会发现个很奇怪的东西，那就是我都用playwright了，可我在里面还是用了bs4，因为我不知道该怎么用playwright保存元素...
 
 ## 使用方法说明
 把源代码下载下来后放到python3.7及以上的版本的解释器中运行本程序（懒得打包成exe了，其实这整个程序都可以说是赶工出来的，懒得改了）.P.S.：请确保您的解释器有[requirements.txt](./requirements.txt)内的第三方模块（你直接```pip install -r requirements.txt```也行）
@@ -48,7 +48,7 @@ config里有两个主键值对，主键值对中还有些小键值对，我们�
 |---------- |---------|
 |url        |这个就是学校打卡的网址，默认值不需要修改|
 |time_of_clock_in |这个是每天打卡的时间，默认值为"8:30"，即每天早上8点30分打一次卡，可以修改成其他时间，但格式必须是24小时制的"xx:yy"的形式，注意":"是英文冒号|
-|SendKey    | 这个是[Server酱](sct.ftqq.com)的推送调用key，详细可以点[Server酱](sct.ftqq.com)了解详情，默认值为空，如果值为空或不存在本键值对的话，程序将不会每日向您微信推送打卡成功情况|
+|SendKey    | 这个是[Server酱](https://sct.ftqq.com)的推送调用key，详细可以点[Server酱](https://sct.ftqq.com)了解详情，默认值为空，如果值为空或不存在本键值对的话，程序将不会每日向您微信推送打卡成功情况|
 
 Server酱的推送内容格式为：
 ```
@@ -65,4 +65,4 @@ Server酱的推送内容格式为：
 
 
 ## 最后
-感谢@[yuban10703](github.com/yuban10703)在我写这个小程序时的协助与支持.
+感谢@[yuban10703](https://github.com/yuban10703)在我写这个小程序时的协助与支持.
