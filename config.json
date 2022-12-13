@@ -1,0 +1,15 @@
+{
+  "user_configs": [
+    {
+      "id": "",
+      "password": "",
+      "in_school": true
+    }
+  ],
+  "system_configs":
+    {
+      "url": "https://workflow.sues.edu.cn/default/work/shgcd/jkxxcj/jkxxcj.jsp",
+      "time_of_clock_in": "8:30",
+      "SendKey": ""
+    }
+}
