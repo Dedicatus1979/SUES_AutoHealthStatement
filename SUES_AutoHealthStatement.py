@@ -175,8 +175,8 @@ def run(playwright: Playwright, username, password, **kwargs) -> None:
     else:
         # --------在家模式      # 无法修改地址...以后再修吧...
         page.locator("label").filter(has_text="否").get_by_role("insertion").click()
-        page.locator("label").filter(has_text="无风险地区").get_by_role("insertion").click()
-        page.get_by_text("无风险地区").click()
+        # page.locator("label").filter(has_text="无风险地区").get_by_role("insertion").click()
+        # page.get_by_text("无风险地区").click()
         page.locator("label").filter(has_text="健康").click()
 
     page.get_by_role("button", name="提交").click()
