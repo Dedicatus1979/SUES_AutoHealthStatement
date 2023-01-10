@@ -3,7 +3,11 @@
     {
       "id": "",
       "password": "",
-      "in_school": true
+      "building": "",
+      "room": "",
+      "in_school": true,
+      "is_negative": false,
+      "is_positive": false
     }
   ],
   "system_configs":
