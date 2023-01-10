@@ -169,17 +169,49 @@ def run(playwright: Playwright, username, password, **kwargs) -> None:
 
     if dicts["in_school"]:
         # --------在校模式
-        page.locator("label").filter(has_text="是").get_by_role("insertion").click()
+        # page.locator("label").filter(has_text="是").get_by_role("insertion").click()
+        page.locator("//*[@id='form']/div[10]/div/div/div[2]/div/div/label[1]").click()     # xpath定位，可直接f12右键
         page.locator("label").filter(has_text="松江校区").get_by_role("insertion").click()
-        page.locator("label").filter(has_text="健康").get_by_role("insertion").click()
+        # page.locator("label").filter(has_text="健康").get_by_role("insertion").click()
+        page.get_by_role("textbox", name="请填写宿舍楼").fill(dicts["building"])
+        page.get_by_role("textbox", name="请填写寝室").fill(dicts["room"])
+
     else:
-        # --------在家模式      # 无法修改地址...以后再修吧...
-        page.locator("label").filter(has_text="否").get_by_role("insertion").click()
+        # --------在家模式      # 无法修改地址...以后再改吧...
+        # page.locator("label").filter(has_text="否").get_by_role("insertion").click()
+        # page.get_by_text("否").nth(1).click()
+        # page.locator(".hover > .iradio_square-green > .iCheck-helper").click()
+
+        # a = page.locator("label").filter(has_text="否")
+        # a.check()
+        # print(type(a))
+        # a.get_by_role("insertion").click()
+
+        # page.get_by_text("否").nth(1).click()
+        # page.locator(".hover > .iradio_square-green > .iCheck-helper").click()
+        # page.locator(":nth-match(:text('否'), 2)").click()
+        # page.locator("button >> visible=true").click()
+
+        page.locator("//*[@id='form']/div[10]/div/div/div[2]/div/div/label[2]").click()     # xpath定位，可直接f12右键
+
         # page.locator("label").filter(has_text="无风险地区").get_by_role("insertion").click()
         # page.get_by_text("无风险地区").click()
-        page.locator("label").filter(has_text="健康").click()
+
+        # page.locator("label").filter(has_text="健康").click()
+
+
+    if dicts["is_positive"]:
+        page.locator("label").filter(has_text="身体异样").get_by_role("insertion").click()
+        page.locator("label").filter(has_text="发热").get_by_role("insertion").click()
+    else:
+        if dicts["is_negative"]:
+            page.locator("label").filter(has_text="未感染").get_by_role("insertion").click()
+        else:
+            page.locator("label").filter(has_text="已康复").get_by_role("insertion").click()
 
     page.get_by_role("button", name="提交").click()
+
+    # time.sleep(60)
     time.sleep(2)
 
     def mouse_move(offset_):
@@ -242,7 +274,9 @@ if __name__ == '__main__':
                 for j in range(3):
                     try:
                         with sync_playwright() as playwright:
-                            run(playwright, users["id"], users["password"], in_school=users["in_school"])
+                            run(playwright, users["id"], users["password"], in_school=users["in_school"],
+                                is_positive=users["is_positive"], is_negative=users["is_negative"],
+                                building=users["building"], room=users["room"])
                     except Exception as Error:
                         now_time = datetime.datetime.now()
                         print(now_time.strftime("%Y-%m-%d %H:%M:%S"))
