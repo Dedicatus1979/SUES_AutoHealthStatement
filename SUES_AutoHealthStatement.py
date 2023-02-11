@@ -156,9 +156,53 @@ def run(playwright: Playwright, username, password, **kwargs) -> None:
     page.goto(url)
     page.get_by_placeholder("账号 Username").fill(username)
     page.get_by_placeholder("密码 Password").fill(password)
-    str_captcha = captcha_identify(page.locator('//img[@class="codeImg fill_form_other"]').screenshot())
-    page.get_by_placeholder("验证码 Verification Code").fill(str_captcha)
+    # str_captcha = captcha_identify(page.locator('//img[@class="codeImg fill_form_other"]').screenshot())
+    # page.get_by_placeholder("验证码 Verification Code").fill(str_captcha)
+
     page.get_by_role("button", name="登 录").click()
+
+    time.sleep(2)
+
+    html = page.content()
+
+    def mouse_move(offset_):
+        """鼠标移动的子程序"""
+        s = page.wait_for_selector('//div[@class="ap-bar-ctr"]', strict=True)
+        box = s.bounding_box()
+        page.mouse.move(box["x"] + box["width"] / 2, box["y"] + box["height"] / 2)
+        page.mouse.down()
+        time.sleep(0.2)
+        page.mouse.move(box["x"] + box["width"] / 2 + offset_, box["y"] + box["height"] / 2, steps=10)
+        time.sleep(0.1)
+        page.mouse.up()
+        time.sleep(2)
+
+    for i in range(5):
+        bg_base64, img_base64 = get_captcha_ending(html)[:2]
+
+        backgroundImage = base64.b64decode(bg_base64)
+        sliderImage = base64.b64decode(img_base64)
+        offset = offset_change(get_offset(backgroundImage, sliderImage)) * 0.75
+
+        mouse_move(offset)
+
+        time.sleep(1)
+
+        html = page.content()
+        try:
+            temp = get_captcha_ending(html)
+        except :
+            temp = ''
+
+        if temp == '':
+            break
+        if i == 4:
+            context.close()
+            browser.close()
+            raise Exception("Captcha Error.")
+        else:
+            print(f"{username} 本次验证码未验证通过,正在尝试第{i+1}次验证.")
+    # ---------------------
 
     time.sleep(1)
 
@@ -214,40 +258,40 @@ def run(playwright: Playwright, username, password, **kwargs) -> None:
     # time.sleep(60)
     time.sleep(2)
 
-    def mouse_move(offset_):
-        """鼠标移动的子程序"""
-        s = page.wait_for_selector('//div[@class="ap-bar-ctr"]', strict=True)
-        box = s.bounding_box()
-        page.mouse.move(box["x"] + box["width"] / 2, box["y"] + box["height"] / 2)
-        page.mouse.down()
-        time.sleep(0.2)
-        page.mouse.move(box["x"] + box["width"] / 2 + offset_, box["y"] + box["height"] / 2, steps=10)
-        time.sleep(0.1)
-        page.mouse.up()
-        time.sleep(2)
-
-    # 获取验证码以及完成验证操作部分
-    html = page.content()
-    for i in range(5):
-        bg_base64, img_base64 = get_captcha_ending(html)[:2]
-
-        backgroundImage = base64.b64decode(bg_base64)
-        sliderImage = base64.b64decode(img_base64)
-        offset = offset_change(get_offset(backgroundImage, sliderImage))
-
-        mouse_move(offset)
-
-        html = page.content()
-        temp = get_captcha_ending(html)
-        if temp[2]:
-            break
-        elif i == 4:
-            context.close()
-            browser.close()
-            raise Exception("Captcha Error.")
-        else:
-            print(f"{username} 本次验证码未验证通过,正在尝试第{i+1}次验证.")
-    # ---------------------
+    # def mouse_move(offset_):
+    #     """鼠标移动的子程序"""
+    #     s = page.wait_for_selector('//div[@class="ap-bar-ctr"]', strict=True)
+    #     box = s.bounding_box()
+    #     page.mouse.move(box["x"] + box["width"] / 2, box["y"] + box["height"] / 2)
+    #     page.mouse.down()
+    #     time.sleep(0.2)
+    #     page.mouse.move(box["x"] + box["width"] / 2 + offset_, box["y"] + box["height"] / 2, steps=10)
+    #     time.sleep(0.1)
+    #     page.mouse.up()
+    #     time.sleep(2)
+    #
+    # # 获取验证码以及完成验证操作部分
+    # html = page.content()
+    # for i in range(5):
+    #     bg_base64, img_base64 = get_captcha_ending(html)[:2]
+    #
+    #     backgroundImage = base64.b64decode(bg_base64)
+    #     sliderImage = base64.b64decode(img_base64)
+    #     offset = offset_change(get_offset(backgroundImage, sliderImage))
+    #
+    #     mouse_move(offset)
+    #
+    #     html = page.content()
+    #     temp = get_captcha_ending(html)
+    #     if temp[2]:
+    #         break
+    #     elif i == 4:
+    #         context.close()
+    #         browser.close()
+    #         raise Exception("Captcha Error.")
+    #     else:
+    #         print(f"{username} 本次验证码未验证通过,正在尝试第{i+1}次验证.")
+    # # ---------------------
     context.close()
     browser.close()
 
@@ -277,6 +321,8 @@ if __name__ == '__main__':
                             run(playwright, users["id"], users["password"], in_school=users["in_school"],
                                 is_positive=users["is_positive"], is_negative=users["is_negative"],
                                 building=users["building"], room=users["room"])
+
+
                     except Exception as Error:
                         now_time = datetime.datetime.now()
                         print(now_time.strftime("%Y-%m-%d %H:%M:%S"))
