@@ -7,6 +7,8 @@ a simple program for auto upload health statement for Shanghai University Of Eng
 
 本程序使用Python3.9编写
 
+## 本程序自2023年3月上海工程技术大学停止强制健康打卡之日起停止维护与更新。
+
 ## 写在前面
 本程序的灵感来源于@[Leng-bingo](https://github.com/Leng-bingo)的[SUES-autotemp](https://github.com/Leng-bingo/SUES-autotemp)，感谢学长（？）留下来的程序，虽然这个程序现在基本不能用了，但里面的验证码识别还是能用的，也令我这个小白大受启发.
 
